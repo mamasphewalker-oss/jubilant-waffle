@@ -1,0 +1,42 @@
+{
+  "name": "medical-3d-clinical-learning-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test:e2e": "playwright test",
+    "licenses": "node scripts/licenses.mjs"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-router-dom": "7.18.4",
+    "three": "0.186.1",
+    "@react-three/fiber": "9.8.1",
+    "@react-three/drei": "10.7.9",
+    "zustand": "5.0.15",
+    "lucide-react": "1.55.0",
+    "recharts": "3.10.1",
+    "zod": "4.6.6",
+    "three-stdlib": "^2.36.0"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vite": "8.3.4",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.186.0",
+    "@types/node": "^24.0.0",
+    "vitest": "5.0.3",
+    "@playwright/test": "1.64.0"
+  }
+}

@@ -1,0 +1,113 @@
+import { test, expect } from "@playwright/test";
+test("home, navigation, all routes and disclaimer", async ({
+  page,
+  isMobile,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "建立临床思维。",
+  );
+  await expect(page.locator("footer")).toContainText(
+    "实际诊断、治疗、处方和用药决策",
+  );
+  if (isMobile) await page.getByRole("button", { name: "展开导航" }).click();
+  await page
+    .getByRole("navigation")
+    .getByRole("link", { name: "3D 人体", exact: true })
+    .click();
+  await expect(page).toHaveURL(/anatomy/);
+  for (const [path, title] of [
+    ["/physiology", "心血管教学模型"],
+    ["/pathology-pharmacology", "病理与药理"],
+    ["/diagnosis", "中西医诊断教学"],
+    ["/treatment", "治疗：西药与方剂"],
+    ["/cases", "病例推理框架"],
+  ]) {
+    await page.goto(path);
+    await expect(
+      page.getByRole("heading", { level: 1, name: title }),
+    ).toBeVisible();
+    await expect(page.locator("footer")).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
+  expect(errors).toEqual([]);
+});
+test("WebGL renders pixels and viewer controls work", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  page.on("console", (m) => {
+    if (m.type() === "error") errors.push(m.text());
+  });
+  await page.goto("/anatomy");
+  const canvas = page.locator("canvas");
+  await expect(canvas).toHaveAttribute("data-ready", "true");
+  // GPU readback is an actual rendered-pixel check, not only a canvas existence assertion.
+  const hasPixels = await canvas.evaluate(async (c: HTMLCanvasElement) => {
+    await new Promise((r) =>
+      requestAnimationFrame(() => requestAnimationFrame(r)),
+    );
+    const gl = c.getContext("webgl2");
+    if (!gl) return false;
+    const bytes = new Uint8Array(4);
+    gl.readPixels(
+      Math.floor(c.width / 2),
+      Math.floor(c.height / 2),
+      1,
+      1,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      bytes,
+    );
+    return bytes[3] > 0;
+  });
+  expect(hasPixels).toBe(true);
+  await page.getByRole("button", { name: "环体", exact: true }).click();
+  await expect(page.getByRole("combobox")).toHaveValue("torus");
+  await page.getByRole("slider", { name: "不透明度" }).fill("0.4");
+  await expect(page.locator("output")).toHaveText("0.4");
+  await page.getByRole("button", { name: "聚焦到对象" }).click();
+  await page
+    .getByRole("checkbox", { name: "显示选中对象", exact: true })
+    .uncheck();
+  await expect(page.getByRole("button", { name: "聚焦到对象" })).toBeDisabled();
+  await page
+    .getByRole("checkbox", { name: "显示选中对象", exact: true })
+    .check();
+  await page.getByRole("button", { name: "重置视图", exact: true }).click();
+  const box = await canvas.boundingBox();
+  if (box) {
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(
+      box.x + box.width / 2 + 60,
+      box.y + box.height / 2 + 20,
+      { steps: 8 },
+    );
+    await page.mouse.up();
+    await page.mouse.wheel(0, 120);
+    await page.mouse.down({ button: "right" });
+    await page.mouse.move(box.x + box.width / 2 + 90, box.y + box.height / 2, {
+      steps: 4,
+    });
+    await page.mouse.up({ button: "right" });
+  }
+  expect(errors).toEqual([]);
+});
+test("simulation updates and case stages advance", async ({ page }) => {
+  await page.goto("/physiology");
+  await expect(page.getByTestId("cardiac-output")).toContainText("4.90");
+  await page.getByRole("slider", { name: "心率 HR" }).fill("100");
+  await expect(page.getByTestId("cardiac-output")).toContainText("7.00");
+  await expect(
+    page.getByText("这是教学模型，不是患者计算器", { exact: false }),
+  ).toBeVisible();
+  await page.goto("/cases");
+  await page.getByRole("button", { name: "下一教学步骤" }).click();
+  await expect(page.locator(".case-preview strong")).toHaveText("History");
+});
