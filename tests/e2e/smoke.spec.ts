@@ -111,3 +111,19 @@ test("simulation updates and case stages advance", async ({ page }) => {
   await page.getByRole("button", { name: "下一教学步骤" }).click();
   await expect(page.locator(".case-preview strong")).toHaveText("History");
 });
+
+test("TCM sources show import boundaries and official repository links", async ({
+  page,
+}) => {
+  await page.goto("/treatment");
+  const sources = page.getByRole("region", { name: "中医药开源研究来源" });
+  await expect(sources.locator("details")).toHaveCount(6);
+  await expect(sources).toContainText("医学数据尚未导入");
+  const first = sources.locator("details").first();
+  await first.locator("summary").click();
+  await expect(first).toContainText("数据导入：未获批准");
+  await expect(first.getByRole("link")).toHaveAttribute(
+    "href",
+    "https://github.com/tigerneil/tcm-cli",
+  );
+});

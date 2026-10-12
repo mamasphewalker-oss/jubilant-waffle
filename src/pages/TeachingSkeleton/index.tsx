@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { EvidenceCard } from "../../components/evidence/EvidenceCard";
+import { TcmResearchSources } from "../../components/evidence/TcmResearchSources";
 import { placeholder } from "../../medical/anatomy/demo";
 import {
   caseStages,
@@ -89,6 +90,7 @@ export default function TeachingSkeleton() {
         )}
         {pathname === "/cases" && <CasePreview />}
       </section>
+      {pathname === "/treatment" && <TcmResearchSources />}
       <EvidenceCard
         object={{ ...placeholder, nameZh: module.title, nameEn: module.title }}
       />

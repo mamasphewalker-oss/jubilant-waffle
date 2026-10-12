@@ -36,7 +36,7 @@ Dev server prints its local URL. For a production build use pnpm preview; static
 - src/simulations: cardiovascular prototype, other systems deliberately deferred
 - src/types, src/medical, src/evidence: runtime-validated provenance and data contracts
 - src/clinical-cases: staged synthetic/de-identified case interface
-- src/imaging, src/integrations: future imaging boundary
+- src/imaging, src/integrations: future imaging boundary and TCM source registry with offline graph contracts
 - tests/unit, tests/e2e, tests/visual; .github/workflows; docs; scripts
 
 ## Medical safety
@@ -48,6 +48,10 @@ Modern medicine anchors teaching. Traditional theory is a supplementary layer, s
 ## Roadmap
 
 [Roadmap](docs/roadmap.md), [architecture](docs/architecture.md), [model policy](docs/anatomy-model-policy.md), [medical data model](docs/medical-data-model.md), [evidence policy](docs/evidence-policy.md), [imaging plan](docs/medical-imaging-roadmap.md).
+
+## TCM research sources
+
+六个中医药开源候选已加入来源登记，在治疗教学页可查看。当前仅包含元数据、离线接入接口与证据分类校验，没有导入第三方医学数据或运行上游应用。参见 [来源核查](docs/tcm-open-source-research.md) 和 [接入计划](docs/tcm-integration-roadmap.md)。
 
 ## License
 
