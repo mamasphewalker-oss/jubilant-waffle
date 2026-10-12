@@ -20,7 +20,7 @@ pnpm dev
 pnpm typecheck
 pnpm test
 pnpm build
-pnpm licenses
+pnpm run licenses
 pnpm exec playwright install chromium
 pnpm test:e2e
 ```

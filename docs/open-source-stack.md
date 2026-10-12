@@ -36,5 +36,5 @@ Development-only formatting: [Prettier](https://github.com/prettier/prettier) 3.
 
 Compatibility: React 19.3 + Fiber 9.8.1 peer range >=19 <19.4 + Drei 10.7.9 ^19/^9; Three 0.186 satisfies renderer peers. Node 24 satisfies Vite/Vitest/Playwright. R3F v10 alpha intentionally avoided. [Official R3F compatibility](https://r3f.docs.pmnd.rs/getting-started/introduction).
 
-Run `pnpm licenses` for transitive manifest audit. webgl-constants@1.1.1 lacks a license field; its bundled MIT LICENSE (Tim van Scherpenzeel 2019) was manually reviewed and is verified by the audit. No GPL/AGPL/unknown dependency is intentionally accepted. Manifest scan is a baseline, not a legal opinion; retain bundled licenses when distributing builds. See third-party-license-inventory.json.
+Run `pnpm run licenses` for transitive manifest audit (explicit `run` avoids pnpm's built-in `licenses` command). webgl-constants@1.1.1 lacks a license field; its bundled MIT LICENSE (Tim van Scherpenzeel 2019) was manually reviewed and is verified by the audit. No GPL/AGPL/unknown dependency is intentionally accepted. Manifest scan is a baseline, not a legal opinion; retain bundled licenses when distributing builds. See third-party-license-inventory.json.
 
