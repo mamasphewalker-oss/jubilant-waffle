@@ -10,6 +10,8 @@ Future anatomy node ids map to model manifests, layers and scale. Loader/clippin
 
 No persistence or URL-backed clinical data. Viewer/simulation state is session-only; route is URL-backed. Browser back/forward uses Router. Future shareable view schema must validate camera/filter inputs and never encode patient data.
 
+Curriculum: `src/curriculum` owns validated five-stage objectives, tasks for four audiences and route links. The home CoursePath component owns audience selection and temporary reflection checkboxes; leaving or refreshing the page resets them. They do not measure completion or competence. No extra persistence, accounts or clinical data are introduced. Course readiness labels distinguish technical prototypes from content skeletons.
+
 Medical boundaries: modern medicine precedes supplementary observations. State-based disease stages and pharmacology steps are teaching concepts, not inferred diagnosis. Case engine only moves between explicit stages and prioritizes supplied red flags. No real case content seeded.
 
 Testing covers dimensions, invalid parameters, evidence promotion, viewer isolation, red-flag ordering and actual browser navigation/rendering. See verification.md.

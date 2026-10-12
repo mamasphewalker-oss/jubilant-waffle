@@ -20,6 +20,8 @@ export function EvidenceCard({ object }: { object: MedicalObject }) {
         <dd>{object.evidenceLevel}</dd>
         <dt>审查日期</dt>
         <dd>{object.reviewedAt ?? "尚未审查"}</dd>
+        <dt>审查人</dt>
+        <dd>{object.reviewerId ?? "尚未指定"}</dd>
       </dl>
       {object.source.length ? (
         <ul>

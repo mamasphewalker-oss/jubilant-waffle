@@ -8,9 +8,7 @@ export const evidenceLevelSchema = z.enum([
   "systematic-review",
   "guideline",
 ]);
-const dateSchema = z
-  .string()
-  .regex(/^\d{4}-\d{2}-\d{2}$/, "Use ISO calendar date");
+const dateSchema = z.iso.date();
 const provenance = z.object({
   id: z.string().min(1),
   nameZh: z.string().min(1),
@@ -23,6 +21,7 @@ const provenance = z.object({
   publicationYear: z.number().int().min(1800).max(2200).nullable(),
   evidenceLevel: evidenceLevelSchema,
   reviewedAt: dateSchema.nullable(),
+  reviewerId: z.string().trim().min(1).nullable().default(null),
   status: statusSchema,
   evidenceSourceIds: z.array(z.string()),
 });
@@ -30,16 +29,18 @@ function reviewedProvenance(value: z.infer<typeof provenance>) {
   return (
     value.status !== "reviewed" ||
     (value.source.length > 0 &&
-      Boolean(value.sourceOrganization) &&
+      Boolean(value.sourceOrganization?.trim()) &&
+      Boolean(value.reviewerId?.trim()) &&
       value.reviewedAt !== null &&
       value.publicationYear !== null &&
       value.evidenceSourceIds.length > 0 &&
+      value.evidenceSourceIds.every((id) => id.trim().length > 0) &&
       value.evidenceLevel !== "not-assessed")
   );
 }
 const metadata = {
   message:
-    "Reviewed content requires traceable sources, organization, evidence, publication year and review date",
+    "Reviewed content requires traceable sources, organization, evidence, publication year, reviewer and review date",
 };
 export const medicalObjectSchema = provenance.refine(
   reviewedProvenance,

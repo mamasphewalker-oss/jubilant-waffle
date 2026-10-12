@@ -1,4 +1,20 @@
 import { test, expect } from "@playwright/test";
+test("course audiences, reflection and route links work", async ({ page }) => {
+  await page.goto("/");
+  const course = page.getByRole("region", { name: "系统课程路径" });
+  await expect(course.locator(".course-stages > li")).toHaveCount(5);
+  await course
+    .getByRole("combobox", { name: "学习者身份" })
+    .selectOption("teacher");
+  await expect(course).toContainText("临床教师任务：");
+  await expect(course).toContainText("组织结构—功能讨论");
+  await course.getByRole("checkbox").first().check();
+  await expect(course).toContainText("已记录自查：1 / 5");
+  await course.getByRole("button", { name: "重置自查记录" }).click();
+  await expect(course.getByRole("checkbox").first()).not.toBeChecked();
+  await course.getByRole("link", { name: "诊断教学框架", exact: true }).click();
+  await expect(page).toHaveURL(/diagnosis/);
+});
 test("home, navigation, all routes and disclaimer", async ({
   page,
   isMobile,

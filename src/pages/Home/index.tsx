@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Box, Activity, BookOpen } from "lucide-react";
+import { CoursePath } from "../../components/curriculum/CoursePath";
 const stages = [
   "正常解剖",
   "正常生理",
@@ -68,6 +69,7 @@ export default function Home() {
           <ArrowUpRight />
         </Link>
       </section>
+      <CoursePath />
       <p className="notice">
         教学原型：未接入真实人体模型、患者数据或临床决策服务。中医内容属于标准化补充教学层，需区分传统理论与现代生物医学证据。
       </p>

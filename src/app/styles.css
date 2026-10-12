@@ -729,3 +729,41 @@ summary {
     scroll-behavior: auto !important;
   }
 }
+
+.course-path {
+  margin-block: 32px;
+}
+.course-audience,
+.course-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.course-audience select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  max-width: 100%;
+}
+.course-stages {
+  list-style: none;
+  padding: 0;
+}
+.course-stages > li {
+  border-top: 1px solid var(--border);
+  padding-block: 20px;
+}
+.course-status {
+  color: var(--gold);
+}
+.course-resources {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-block: 16px;
+}
+.course-check {
+  min-height: 44px;
+}

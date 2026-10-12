@@ -29,6 +29,8 @@ Dev server prints its local URL. For a production build use pnpm preview; static
 
 ## Modules and directory
 
+首页提供“正常功能 → 疾病机制与药物作用 → 临床诊断 → 规范治疗 → 病例推理”五阶段课程路径，按医学生、住院医师、临床教师和中西医结合学习者切换任务。包含教师讨论、自查问题及当前页面内的自查记录。参见 [课程缺口检查](docs/curriculum-gap-review.md)；课程框架尚不代表已审核医学课程。
+
 - src/app: shell, accessibility, lazy route composition and design tokens
 - src/pages: seven routes; anatomy/physiology working prototypes, remaining teaching skeletons
 - src/three: viewer, anatomy hierarchy, clipping/model contracts and future extension notes
@@ -36,6 +38,7 @@ Dev server prints its local URL. For a production build use pnpm preview; static
 - src/simulations: cardiovascular prototype, other systems deliberately deferred
 - src/types, src/medical, src/evidence: runtime-validated provenance and data contracts
 - src/clinical-cases: staged synthetic/de-identified case interface
+- src/curriculum: five-stage course objectives, audience tasks and teaching-route links
 - src/imaging, src/integrations: future imaging boundary and TCM source registry with offline graph contracts
 - tests/unit, tests/e2e, tests/visual; .github/workflows; docs; scripts
 

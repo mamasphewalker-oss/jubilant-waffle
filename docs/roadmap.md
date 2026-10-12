@@ -2,6 +2,8 @@
 
 Phase 1: open-source research, provenance model, seven-route dark app shell, procedural WebGL viewer, cardiovascular teaching prototype, staged case/diagnosis/treatment skeletons, future imaging contract, unit/E2E and CI.
 
+Added: a five-stage curriculum map for four audiences, teaching objectives/discussion prompts and temporary self-check records; named reviewer and calendar-date validation. See [curriculum gap review](curriculum-gap-review.md) for completed items and remaining prerequisites. These additions are course structure, not reviewed medical lessons.
+
 Next five priorities:
 
 1. Qualified medical review process and provenance workflow, including evidence-ID resolution and claim-level citations.

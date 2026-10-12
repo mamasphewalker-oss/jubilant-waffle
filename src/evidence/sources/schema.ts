@@ -11,19 +11,16 @@ export const evidenceSourceSchema = z
     version: z.string().min(1),
     publicationYear: z.number().int().nullable(),
     evidenceLevel: evidenceLevelSchema,
-    reviewedAt: z
-      .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/)
-      .nullable(),
+    reviewedAt: z.iso.date().nullable(),
     status: statusSchema,
     evidenceDomain: z.enum([
       "modern-biomedical",
       "traditional-theory",
       "educational-assumption",
     ]),
-    accessedAt: z.string(),
+    accessedAt: z.iso.date(),
     license: z.string().nullable(),
-    reviewerId: z.string().nullable(),
+    reviewerId: z.string().trim().min(1).nullable(),
   })
   .refine(
     (s) =>
