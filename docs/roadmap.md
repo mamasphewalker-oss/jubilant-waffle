@@ -8,7 +8,7 @@ Next five priorities:
 
 1. Qualified medical review process and provenance workflow, including evidence-ID resolution and claim-level citations.
 2. License/medical audit of one small anatomical model with stable node IDs and verified orientation; introduce model loader.
-3. Expand viewer keyboard camera controls and touch pan/zoom buttons, clipping planes, selection outlines and mobile GPU benchmarks.
+3. Technical isolation/restoration, keyboard/touch camera buttons and world-axis clipping are implemented. Next: reviewed anatomical orientation mapping, selection outlines, cut caps if justified and mobile GPU benchmarks.
 4. Implement one explicitly synthetic, medically reviewed case with red-flag-first reasoning and evidence reveal steps.
 5. Validate a phantom-only Cornerstone3D adapter with lifecycle, orientation and memory tests before any educational CT/MR module.
 

@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Focus, RotateCcw, Layers, MousePointer2 } from "lucide-react";
 import { sceneObjects, type ObjectId } from "../../three/anatomy/scene";
 import { useViewer } from "../../store/viewer";
+import { CameraControls } from "../../components/viewer/CameraControls";
 const AnatomyViewer = lazy(() => import("../../three/viewer/AnatomyViewer"));
 export default function Anatomy3D() {
   const selected = useViewer((s) => s.selected);
@@ -14,6 +15,11 @@ export default function Anatomy3D() {
   const camera = useViewer((s) => s.camera);
   const setOpacity = useViewer((s) => s.setOpacity);
   const setLabels = useViewer((s) => s.setLabels);
+  const isolate = useViewer((s) => s.isolate);
+  const restoreIsolation = useViewer((s) => s.restoreIsolation);
+  const isolationSnapshot = useViewer((s) => s.isolationSnapshot);
+  const clipping = useViewer((s) => s.clipping);
+  const setClipping = useViewer((s) => s.setClipping);
   const object = sceneObjects.find((o) => o.id === selected)!;
   return (
     <>
@@ -104,7 +110,10 @@ export default function Anatomy3D() {
             显示选中对象
           </label>
           <label>
-            不透明度 <output>{opacity[selected].toFixed(1)}</output>
+            不透明度{" "}
+            <output aria-label="不透明度数值">
+              {opacity[selected].toFixed(1)}
+            </output>
             <input
               type="range"
               min="0.1"
@@ -148,6 +157,64 @@ export default function Anatomy3D() {
             <RotateCcw size={18} />
             重置视图
           </button>
+          <button className="button" onClick={isolate}>
+            仅显示选中对象
+          </button>
+          <button
+            className="button"
+            disabled={!isolationSnapshot}
+            onClick={restoreIsolation}
+          >
+            恢复隔离前可见性
+          </button>
+          <details className="clipping-controls">
+            <summary>技术剖切演示</summary>
+            <p>
+              世界坐标平面剖切占位几何体，无切面封盖，不代表人体断层。启用时暂隐藏场景标签。
+            </p>
+            <label className="check-row">
+              <input
+                type="checkbox"
+                checked={clipping.enabled}
+                onChange={(event) =>
+                  setClipping({ enabled: event.target.checked })
+                }
+              />
+              启用剖切
+            </label>
+            <label>
+              剖切轴
+              <select
+                value={clipping.axis}
+                onChange={(event) =>
+                  setClipping({ axis: event.target.value as "x" | "y" | "z" })
+                }
+              >
+                <option value="x">X</option>
+                <option value="y">Y</option>
+                <option value="z">Z</option>
+              </select>
+            </label>
+            <label>
+              剖切位置{" "}
+              <output aria-label="剖切位置数值">
+                {clipping.position.toFixed(1)}
+              </output>
+              <input
+                aria-label="剖切位置"
+                type="range"
+                min="-4"
+                max="4"
+                step="0.1"
+                value={clipping.position}
+                disabled={!clipping.enabled}
+                onChange={(event) =>
+                  setClipping({ position: Number(event.target.value) })
+                }
+              />
+            </label>
+          </details>
+          <CameraControls />
           <p className="muted" role="status">
             当前选择：{object.name}
             {hovered

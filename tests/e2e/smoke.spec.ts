@@ -1,4 +1,70 @@
 import { test, expect } from "@playwright/test";
+test("isolation, clipping and keyboard camera change the actual scene", async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/anatomy");
+  const canvas = page.locator("canvas");
+  await expect(canvas).toHaveAttribute("data-ready", "true");
+  const initialViewportHeight = (await page.locator(".viewport").boundingBox())!
+    .height;
+  await page
+    .getByRole("button", { name: "仅显示选中对象", exact: true })
+    .click();
+  await expect(
+    page.getByRole("checkbox", { name: "显示环体", exact: true }),
+  ).not.toBeChecked();
+  await expect(
+    page.getByRole("checkbox", { name: "显示柱体", exact: true }),
+  ).not.toBeChecked();
+  await page.getByRole("checkbox", { name: "显示标签", exact: true }).uncheck();
+  await page.getByText("技术剖切演示", { exact: true }).click();
+  const before = await canvas.screenshot();
+  await page.getByRole("checkbox", { name: "启用剖切", exact: true }).check();
+  await page
+    .getByRole("slider", { name: "剖切位置", exact: true })
+    .fill("-2.2");
+  await canvas.evaluate(
+    () =>
+      new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      ),
+  );
+  expect((await canvas.screenshot()).equals(before)).toBe(false);
+  await page.getByRole("checkbox", { name: "启用剖切", exact: true }).uncheck();
+  await page
+    .getByRole("button", { name: "恢复隔离前可见性", exact: true })
+    .click();
+  await expect(
+    page.getByRole("checkbox", { name: "显示环体", exact: true }),
+  ).toBeChecked();
+  await expect(
+    page.getByRole("checkbox", { name: "显示柱体", exact: true }),
+  ).toBeChecked();
+  await page.getByText("键盘与触屏镜头控制", { exact: true }).click();
+  const cameraBefore = await canvas.getAttribute("data-camera-position");
+  const renderedBefore = await canvas.screenshot();
+  await page.getByRole("group", { name: "镜头键盘控制区" }).focus();
+  await page.keyboard.press("ArrowLeft");
+  await expect(canvas).not.toHaveAttribute(
+    "data-camera-position",
+    cameraBefore!,
+  );
+  await canvas.evaluate(
+    () =>
+      new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      ),
+  );
+  expect((await canvas.screenshot()).equals(renderedBefore)).toBe(false);
+  await page.getByRole("button", { name: "放大场景", exact: true }).click();
+  expect((await page.locator(".viewport").boundingBox())!.height).toBeCloseTo(
+    initialViewportHeight,
+    0,
+  );
+  expect(errors).toEqual([]);
+});
 test("course audiences, reflection and route links work", async ({ page }) => {
   await page.goto("/");
   const course = page.getByRole("region", { name: "系统课程路径" });
@@ -84,9 +150,13 @@ test("WebGL renders pixels and viewer controls work", async ({ page }) => {
   });
   expect(hasPixels).toBe(true);
   await page.getByRole("button", { name: "环体", exact: true }).click();
-  await expect(page.getByRole("combobox")).toHaveValue("torus");
+  await expect(page.getByRole("combobox", { name: "选择对象" })).toHaveValue(
+    "torus",
+  );
   await page.getByRole("slider", { name: "不透明度" }).fill("0.4");
-  await expect(page.locator("output")).toHaveText("0.4");
+  await expect(page.getByRole("status", { name: "不透明度数值" })).toHaveText(
+    "0.4",
+  );
   await page.getByRole("button", { name: "聚焦到对象" }).click();
   await page
     .getByRole("checkbox", { name: "显示选中对象", exact: true })

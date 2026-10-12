@@ -214,6 +214,7 @@ main:focus {
 }
 .anatomy-workspace {
   display: grid;
+  align-items: start;
   grid-template-columns: 200px minmax(0, 1fr) 240px;
   gap: 16px;
   min-height: 570px;
@@ -259,6 +260,7 @@ main:focus {
   position: relative;
   min-width: 0;
   min-height: 570px;
+  height: clamp(570px, 70vh, 760px);
   background: #061825;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -656,6 +658,7 @@ summary {
   .anatomy-workspace {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
   }
   .viewport {
     order: 0;
@@ -739,6 +742,25 @@ summary {
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.clipping-controls,
+.camera-controls {
+  margin-top: 18px;
+}
+.camera-step-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.camera-step-grid .button {
+  min-height: 44px;
+  padding: 8px;
+  justify-content: center;
+}
+.camera-step-grid:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
 }
 .course-audience select {
   background: var(--bg);

@@ -6,7 +6,9 @@ Three procedural meshes are the complete scene: sphere, torus, cylinder, all sta
 
 Rendering profile: 3 meshes, modest geometry, one grid, three small generated label textures, no network model assets. No LOD or instancing until real measurements justify them. Route splitting isolates 3D and chart costs. Mobile reorders viewport → layer tree → inspector. WebGL failure retains DOM controls and a clear fallback. Do not treat fallback as successful GPU rendering in tests.
 
-Future anatomy node ids map to model manifests, layers and scale. Loader/clipping interfaces are extension seams, not working features. Adapter lifecycle owns abort, resize and disposal. Any future data import is validated and evidence-reference IDs resolved before review/publishing.
+Future anatomy node ids map to model manifests, layers and scale. Loader interfaces and anatomical-plane mapping remain extension seams. Technical world-axis clipping is implemented with Three.js material clipping planes and DoubleSide; it has no cut caps and is not anatomical imaging. Clipped-away intersections do not select objects, and sprite labels are temporarily hidden during clipping. Adapter lifecycle owns abort, resize and disposal. Any future data import is validated and evidence-reference IDs resolved before review/publishing.
+
+Viewer isolation stores the previous visibility map and can restore it; repeated isolation retains the original snapshot. Camera commands use bounded, discrete spherical rotation/zoom and screen-aligned pan; keyboard shortcuts apply only when the dedicated DOM control group itself has focus so native input keys remain intact. Native OrbitControls remains the pointer/touch control path. New controls add no runtime dependency or continuous render loop.
 
 No persistence or URL-backed clinical data. Viewer/simulation state is session-only; route is URL-backed. Browser back/forward uses Router. Future shareable view schema must validate camera/filter inputs and never encode patient data.
 

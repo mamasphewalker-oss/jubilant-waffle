@@ -50,6 +50,8 @@ Modern medicine anchors teaching. Traditional theory is a supplementary layer, s
 
 ## Roadmap
 
+3D 查看器支持对象隔离及可见性恢复、X/Y/Z 世界坐标剖切、键盘/触屏旋转缩放平移。剖切为无封盖的技术演示，不代表人体断层；启用时暂隐藏场景标签。参见 [3D GitHub 工具清单](docs/interactive-3d-github-toolkit.md)，区分既有依赖、资产流水线工具和后续评估项。
+
 [Roadmap](docs/roadmap.md), [architecture](docs/architecture.md), [model policy](docs/anatomy-model-policy.md), [medical data model](docs/medical-data-model.md), [evidence policy](docs/evidence-policy.md), [imaging plan](docs/medical-imaging-roadmap.md).
 
 ## TCM research sources

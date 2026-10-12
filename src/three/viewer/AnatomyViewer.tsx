@@ -1,7 +1,8 @@
 import { Component, useEffect, useMemo, useRef, type ReactNode } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { CanvasTexture } from "three";
+import { CanvasTexture, Plane, Vector3, DoubleSide, FrontSide } from "three";
+import { stepCamera } from "./camera";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { sceneObjects } from "../anatomy/scene";
 import { useViewer } from "../../store/viewer";
@@ -26,7 +27,7 @@ class ViewerBoundary extends Component<
 }
 function Scene() {
   const controls = useRef<OrbitControlsImpl>(null);
-  const { camera, invalidate } = useThree();
+  const { camera, invalidate, gl } = useThree();
   const selected = useViewer((s) => s.selected);
   const hovered = useViewer((s) => s.hovered);
   const visibility = useViewer((s) => s.visibility);
@@ -35,6 +36,23 @@ function Scene() {
   const command = useViewer((s) => s.cameraCommand);
   const select = useViewer((s) => s.select);
   const hover = useViewer((s) => s.hover);
+  const clipping = useViewer((s) => s.clipping);
+  const planes = useMemo(
+    () =>
+      clipping.enabled
+        ? [
+            new Plane(
+              new Vector3(
+                clipping.axis === "x" ? 1 : 0,
+                clipping.axis === "y" ? 1 : 0,
+                clipping.axis === "z" ? 1 : 0,
+              ),
+              -clipping.position,
+            ),
+          ]
+        : [],
+    [clipping],
+  );
   useEffect(() => {
     if (!controls.current) return;
     const target = sceneObjects.find(
@@ -43,14 +61,26 @@ function Scene() {
     if (command.type === "reset") {
       camera.position.set(5, 3.8, 7);
       controls.current.target.set(0, 0.7, 0);
-    } else {
+    } else if (command.type === "focus") {
       const [x, y, z] = target.position;
       camera.position.set(x + 2.5, y + 2, z + 4);
       controls.current.target.set(x, y, z);
+    } else {
+      const next = stepCamera(
+        camera.position,
+        controls.current.target,
+        command.type,
+      );
+      camera.position.copy(next.position);
+      controls.current.target.copy(next.target);
     }
     controls.current.update();
     invalidate();
-  }, [command, camera, invalidate]);
+    gl.domElement.dataset.cameraPosition = camera.position
+      .toArray()
+      .map((value) => value.toFixed(4))
+      .join(",");
+  }, [command, camera, invalidate, gl]);
   return (
     <>
       <color attach="background" args={["#061825"]} />
@@ -64,10 +94,18 @@ function Scene() {
               <mesh
                 name={o.id}
                 onClick={(e) => {
+                  if (
+                    planes.some((plane) => plane.distanceToPoint(e.point) < 0)
+                  )
+                    return;
                   e.stopPropagation();
                   select(o.id);
                 }}
                 onPointerOver={(e) => {
+                  if (
+                    planes.some((plane) => plane.distanceToPoint(e.point) < 0)
+                  )
+                    return;
                   e.stopPropagation();
                   hover(o.id);
                 }}
@@ -84,6 +122,8 @@ function Scene() {
                   <cylinderGeometry args={[0.65, 0.65, 2, 32]} />
                 )}
                 <meshStandardMaterial
+                  clippingPlanes={planes}
+                  side={clipping.enabled ? DoubleSide : FrontSide}
                   color={o.color}
                   metalness={0.25}
                   roughness={0.32}
@@ -96,7 +136,7 @@ function Scene() {
                   }
                 />
               </mesh>
-              {labels && <SceneLabel name={o.name} />}
+              {labels && !clipping.enabled && <SceneLabel name={o.name} />}
             </group>
           ),
       )}
@@ -141,7 +181,10 @@ export default function AnatomyViewer() {
   return (
     <ViewerBoundary>
       <Canvas
-        gl={{ preserveDrawingBuffer: import.meta.env.DEV }}
+        gl={{
+          preserveDrawingBuffer: import.meta.env.DEV,
+          localClippingEnabled: true,
+        }}
         camera={{ position: [5, 3.8, 7], fov: 45 }}
         frameloop="demand"
         dpr={[1, 1.5]}

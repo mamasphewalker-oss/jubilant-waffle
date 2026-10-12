@@ -3,9 +3,9 @@
 Local validation on Windows / Node 24.19.0 / pnpm 11.25.0, 2026-10-12 (Asia/Bangkok):
 
 - TypeScript strict check passed.
-- Vitest: 13 tests passed (formula dimensions/invalid input, source promotion, viewer state isolation, case stage/red-flag ordering).
+- Vitest: 30 tests passed, including course coverage, review provenance/calendar dates, TCM import gates, isolation restoration and camera distance limits.
 - Vite production build passed; anatomy and chart pages split. Largest 3D chunk approximately 934 kB raw / 249 kB gzip before final label change. No large models.
-- Chromium and Pixel 7 emulation: all 6 E2E tests passed. Actual WebGL2 pixel readback, rotation/zoom/pan, focus/reset, selection, layer visibility, opacity, navigation across all seven routes, visible disclaimer, no horizontal overflow, simulation updates, case-stage progression. No console errors in viewer test.
+- Chromium and Pixel 7 emulation: all 12 E2E tests passed. Actual WebGL2 pixel readback; rendered canvas changes after clipping and keyboard camera commands; rotation/zoom/pan, focus/reset, selection, visibility restoration, opacity, all seven routes, disclaimer, no horizontal overflow, simulation and case progression, six-source registry, audience switch/self-check/reset/course links. No application errors in viewer tests.
 - Desktop 1440×1000, tablet 820×1180, mobile 390×844 captured and visually reviewed. All scroll widths equal viewport widths. Basic semantic controls, labels, skip link, focus outlines, font-size control and reduced motion inspected. No claim of full WCAG certification.
 - 152 installed manifest license records audited; no unreviewed unknown/GPL/AGPL detected. webgl-constants MIT bundled LICENSE reviewed despite missing manifest field. See inventory.
 
