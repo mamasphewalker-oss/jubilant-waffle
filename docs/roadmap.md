@@ -13,3 +13,11 @@ Next five priorities:
 5. Validate a phantom-only Cornerstone3D adapter with lifecycle, orientation and memory tests before any educational CT/MR module.
 
 Deferred: whole-body assets, all organ simulations, full DICOM/PACS, real patients, automated diagnosis/prescriptions, AI doctor, herbal/acupuncture prescriptions.
+
+## 2026-10-13 directive priority update
+
+See [repository audit and validated workstation increment](audit-2026-10-13.md). Continue on the existing stack and resource-governance branch. The current user directive supersedes the old dark visual direction and any future progress/history persistence proposal.
+
+Delivered this round: light CCS-focused workspace, recursive directory, bilingual shell/home/search with explicit legacy-language fallback, local Spotlight, camera route restoration, hash routes, configurable base and GitHub Pages quality/deploy workflow. Phase 4 remains in progress; neither medical content nor anatomy Golden Sample is complete.
+
+Next: remaining Phase 4 module UI localization → professional viewer foundation → P0 per-asset heart/coronary/chamber/valve/great-vessel gate → reviewed normal anatomy. Do not advance into broad disease/case production while these gates remain open. No account, favorites, notes, progress or case-history persistence is authorized by this directive.

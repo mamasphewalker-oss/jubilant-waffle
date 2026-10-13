@@ -17,3 +17,9 @@ Curriculum: `src/curriculum` owns validated five-stage objectives, tasks for fou
 Medical boundaries: modern medicine precedes supplementary observations. State-based disease stages and pharmacology steps are teaching concepts, not inferred diagnosis. Case engine only moves between explicit stages and prioritizes supplied red flags. No real case content seeded.
 
 Testing covers dimensions, invalid parameters, evidence promotion, viewer isolation, red-flag ordering and actual browser navigation/rendering. See verification.md.
+
+## Static workstation routing and state (2026-10-13)
+
+createHashRouter now owns routes so static Pages needs no rewrite: /jubilant-waffle/#/anatomy. VITE_BASE_PATH controls generated asset paths; resolveAssetUrl is the single relative-local-asset entry point for future registered media. Directory and Spotlight share app/catalog.ts; recursive nodes carry navigation readiness, not evidence approval. Shell/home/search locale is in memory; legacy prose has an explicit English-unavailable notice. No persistent clinical or learner state.
+
+Camera snapshots store actual position and target on OrbitControls changes in the existing viewer store. Remount restores them without replaying a consumed command. Canvas unmounts on 2D routes; no hidden continuous renderer is retained. Native modal dialog supplies focus containment and Escape; search restores opener focus on close. No extra dependency.

@@ -4,7 +4,7 @@ test("isolation, clipping and keyboard camera change the actual scene", async ({
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/anatomy");
+  await page.goto("/#/anatomy");
   const canvas = page.locator("canvas");
   await expect(canvas).toHaveAttribute("data-ready", "true");
   const initialViewportHeight = (await page.locator(".viewport").boundingBox())!
@@ -67,6 +67,7 @@ test("isolation, clipping and keyboard camera change the actual scene", async ({
 });
 test("course audiences, reflection and route links work", async ({ page }) => {
   await page.goto("/");
+  await page.getByText("展开现有课程框架", { exact: true }).click();
   const course = page.getByRole("region", { name: "系统课程路径" });
   await expect(course.locator(".course-stages > li")).toHaveCount(5);
   await course
@@ -89,7 +90,7 @@ test("home, navigation, all routes and disclaimer", async ({
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "建立临床思维。",
+    "循环系统学习工作台",
   );
   await expect(page.locator("footer")).toContainText(
     "实际诊断、治疗、处方和用药决策",
@@ -107,7 +108,7 @@ test("home, navigation, all routes and disclaimer", async ({
     ["/treatment", "治疗：西药与方剂"],
     ["/cases", "病例推理框架"],
   ]) {
-    await page.goto(path);
+    await page.goto("/#" + path);
     await expect(
       page.getByRole("heading", { level: 1, name: title }),
     ).toBeVisible();
@@ -126,7 +127,7 @@ test("WebGL renders pixels and viewer controls work", async ({ page }) => {
   page.on("console", (m) => {
     if (m.type() === "error") errors.push(m.text());
   });
-  await page.goto("/anatomy");
+  await page.goto("/#/anatomy");
   const canvas = page.locator("canvas");
   await expect(canvas).toHaveAttribute("data-ready", "true");
   // GPU readback is an actual rendered-pixel check, not only a canvas existence assertion.
@@ -186,14 +187,14 @@ test("WebGL renders pixels and viewer controls work", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 test("simulation updates and case stages advance", async ({ page }) => {
-  await page.goto("/physiology");
+  await page.goto("/#/physiology");
   await expect(page.getByTestId("cardiac-output")).toContainText("4.90");
   await page.getByRole("slider", { name: "心率 HR" }).fill("100");
   await expect(page.getByTestId("cardiac-output")).toContainText("7.00");
   await expect(
     page.getByText("这是教学模型，不是患者计算器", { exact: false }),
   ).toBeVisible();
-  await page.goto("/cases");
+  await page.goto("/#/cases");
   await page.getByRole("button", { name: "下一教学步骤" }).click();
   await expect(page.locator(".case-preview strong")).toHaveText("History");
 });
@@ -201,7 +202,7 @@ test("simulation updates and case stages advance", async ({ page }) => {
 test("TCM sources show import boundaries and official repository links", async ({
   page,
 }) => {
-  await page.goto("/treatment");
+  await page.goto("/#/treatment");
   const sources = page.getByRole("region", { name: "中医药开源研究来源" });
   await expect(sources.locator("details")).toHaveCount(6);
   await expect(sources).toContainText("医学数据尚未导入");

@@ -25,7 +25,7 @@ pnpm exec playwright install chromium
 pnpm test:e2e
 ```
 
-Dev server prints its local URL. For a production build use pnpm preview; static hosting must rewrite unknown paths to index.html for browser-history routes. No backend or external credentials needed.
+Dev server prints its local URL. Routes use hash URLs such as /#/anatomy; static hosting needs no history rewrite. For GitHub Pages build with VITE_BASE_PATH=/jubilant-waffle/ and run pnpm preview --base /jubilant-waffle/. pnpm test:production checks that project-base build on a strict static server. No backend or external credentials needed.
 
 ## Modules and directory
 
@@ -65,3 +65,7 @@ Modern medicine anchors teaching. Traditional theory is a supplementary layer, s
 ## License
 
 License: To be determined. No project license is granted by dependency licenses. Third-party licenses and attribution remain applicable independently.
+
+## Current workstation increment
+
+See [2026-10-13 audit](docs/audit-2026-10-13.md). Light CCS-focused shell, recursive directory, Ctrl/Cmd+K local search, Chinese/English shell and home, session-only viewer camera restoration, and Pages workflow. Legacy module content remains Chinese with explicit language fallback. No approved medical asset or CCS case is included. GitHub Pages requires repository Settings → Pages → GitHub Actions; deployment runs from main only. Feature work does not auto-merge or publish.

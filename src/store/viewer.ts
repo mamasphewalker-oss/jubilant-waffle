@@ -2,6 +2,11 @@ import { create } from "zustand";
 import type { ObjectId } from "../three/anatomy/scene";
 import type { CameraCommand } from "../three/viewer/camera";
 type ViewerState = {
+  cameraSnapshot: {
+    position: [number, number, number];
+    target: [number, number, number];
+  } | null;
+  saveCamera: (snapshot: NonNullable<ViewerState["cameraSnapshot"]>) => void;
   selected: ObjectId;
   hovered: ObjectId | null;
   visibility: Record<ObjectId, boolean>;
@@ -21,6 +26,8 @@ type ViewerState = {
   camera: (type: CameraCommand) => void;
 };
 export const useViewer = create<ViewerState>((set) => ({
+  cameraSnapshot: null,
+  saveCamera: (cameraSnapshot) => set({ cameraSnapshot }),
   selected: "sphere",
   hovered: null,
   visibility: { sphere: true, torus: true, cylinder: true },

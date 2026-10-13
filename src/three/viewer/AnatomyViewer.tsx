@@ -27,6 +27,8 @@ class ViewerBoundary extends Component<
 }
 function Scene() {
   const controls = useRef<OrbitControlsImpl>(null);
+  const restored = useRef(false);
+  const processedCommand = useRef(useViewer.getState().cameraCommand.sequence);
   const { camera, invalidate, gl } = useThree();
   const selected = useViewer((s) => s.selected);
   const hovered = useViewer((s) => s.hovered);
@@ -37,6 +39,36 @@ function Scene() {
   const select = useViewer((s) => s.select);
   const hover = useViewer((s) => s.hover);
   const clipping = useViewer((s) => s.clipping);
+  const saveView = () => {
+    if (!controls.current || !restored.current) return;
+    useViewer
+      .getState()
+      .saveCamera({
+        position: camera.position.toArray(),
+        target: controls.current.target.toArray(),
+      });
+    gl.domElement.dataset.cameraPosition = camera.position
+      .toArray()
+      .map((value) => value.toFixed(4))
+      .join(",");
+    gl.domElement.dataset.cameraTarget = controls.current.target
+      .toArray()
+      .map((value) => value.toFixed(4))
+      .join(",");
+  };
+  useEffect(() => {
+    if (!controls.current) return;
+    const snapshot = useViewer.getState().cameraSnapshot;
+    camera.position.fromArray(snapshot?.position ?? [5, 3.8, 7]);
+    controls.current.target.fromArray(snapshot?.target ?? [0, 0.7, 0]);
+    restored.current = true;
+    controls.current.update();
+    saveView();
+    invalidate();
+    return () => {
+      useViewer.getState().hover(null);
+    };
+  }, [camera, invalidate]);
   const planes = useMemo(
     () =>
       clipping.enabled
@@ -55,6 +87,8 @@ function Scene() {
   );
   useEffect(() => {
     if (!controls.current) return;
+    if (processedCommand.current === command.sequence) return;
+    processedCommand.current = command.sequence;
     const target = sceneObjects.find(
       (o) => o.id === useViewer.getState().selected,
     )!;
@@ -83,10 +117,10 @@ function Scene() {
   }, [command, camera, invalidate, gl]);
   return (
     <>
-      <color attach="background" args={["#061825"]} />
+      <color attach="background" args={["#edf1f5"]} />
       <ambientLight intensity={1.6} />
       <directionalLight position={[3, 6, 5]} intensity={3} />
-      <gridHelper args={[24, 24, "#285260", "#173343"]} />
+      <gridHelper args={[24, 24, "#b6c3cf", "#d9e0e7"]} />
       {sceneObjects.map(
         (o) =>
           visibility[o.id] && (
@@ -146,6 +180,8 @@ function Scene() {
         minDistance={1.5}
         maxDistance={30}
         enablePan
+        enableDamping={false}
+        onChange={saveView}
       />
     </>
   );
@@ -158,12 +194,12 @@ function SceneLabel({ name }: { name: string }) {
     canvas.width = 256;
     canvas.height = 80;
     const ctx = canvas.getContext("2d")!;
-    ctx.fillStyle = "#0b2538";
+    ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, 256, 80);
-    ctx.strokeStyle = "#315466";
+    ctx.strokeStyle = "#b6c3cf";
     ctx.lineWidth = 3;
     ctx.strokeRect(1, 1, 254, 78);
-    ctx.fillStyle = "#edf4fa";
+    ctx.fillStyle = "#243444";
     ctx.font = '32px "Microsoft YaHei", sans-serif';
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";

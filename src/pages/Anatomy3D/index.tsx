@@ -25,7 +25,7 @@ export default function Anatomy3D() {
     <>
       <div className="page-heading">
         <h1>3D 交互实验室</h1>
-        <p>技术占位几何体 · 非人体解剖模型</p>
+        <p>DEV_PLACEHOLDER · 技术占位几何体 · 非人体解剖模型</p>
       </div>
       <div className="anatomy-workspace">
         <aside className="panel structure-tree">

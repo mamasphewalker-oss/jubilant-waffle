@@ -15,7 +15,7 @@ for (const [name, width, height] of [
     viewport: { width, height },
     deviceScaleFactor: 1,
   });
-  await page.goto("http://127.0.0.1:4180/anatomy");
+  await page.goto("http://127.0.0.1:4180/#/anatomy");
   await page.locator("canvas[data-ready=true]").waitFor();
   await page.screenshot({
     path: output + "/anatomy-" + name + ".png",

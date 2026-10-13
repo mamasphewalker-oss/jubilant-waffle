@@ -1,12 +1,12 @@
 # Cardiovascular Golden Sample resource queue
 
-This is an acquisition/planning queue, not a claim that a sample exists or has been clinically approved. “CCS” is provisionally treated as chronic coronary syndrome; confirm the intended expansion/scope before building content. No patient data, pediatric cases or assets are included.
+This is an acquisition/planning queue, not a claim that a sample exists or has been clinically approved. The user directive on 2026-10-13 explicitly confirms CCS as chronic coronary syndrome. The same directive makes normal adult heart, coronaries, chambers/valves/great vessels P0; perfusion territories P1. This priority correction does not grant asset or medical approval. No patient data, pediatric cases or assets are included.
 
 | # | Resource | status | priority | preferredSource | alternativeSource | licenseStatus | medicalVerificationStatus | localAssetStatus |
 |---:|---|---|---|---|---|---|---|---|
-| 1 | Normal heart anatomy GLB | queued | P1 | HRA/HuBMAP record with explicit asset rights | Z-Anatomy only if exact component cleared | pending_license_review | pendingVerification | absent |
-| 2 | Coronary artery structures | queued | P1 | Asset-level licensed atlas/model | Original reviewed model with manifest | pending_license_review | pendingVerification | absent |
-| 3 | Valves, chambers and great vessels | queued | P1 | HRA/HuBMAP or separately licensed atlas | Original model with medical review | pending_license_review | pendingVerification | absent |
+| 1 | Normal heart anatomy GLB | queued | P0 | HRA/HuBMAP record with explicit asset rights | Z-Anatomy only if exact component cleared | pending_license_review | pendingVerification | absent |
+| 2 | Coronary artery structures | queued | P0 | Asset-level licensed atlas/model | Original reviewed model with manifest | pending_license_review | pendingVerification | absent |
+| 3 | Valves, chambers and great vessels | queued | P0 | HRA/HuBMAP or separately licensed atlas | Original model with medical review | pending_license_review | pendingVerification | absent |
 | 4 | Coronary perfusion territories | queued | P1 | Peer-reviewed original source plus reviewed original diagram/model | Current authoritative Chinese cardiology guidance | pending_license_review | pendingVerification | absent |
 | 5 | Cardiac cycle / flow animation | queued | P2 | Original simulation with sourced parameters | Licensed teaching animation | pending_license_review | pendingVerification | absent |
 | 6 | Atherosclerosis macropathology | queued | P2 | Official university teaching collection | TCIA collection with verified terms | pending_license_review | pendingVerification | absent |
