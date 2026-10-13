@@ -1,15 +1,8 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { CoursePath } from "../../components/curriculum/CoursePath";
+import { BodyAtlas } from "../../components/navigation/BodyAtlas";
 import { usePreferences } from "../../store/preferences";
-const systems = [
-  ["呼吸", "Respiratory"],
-  ["内分泌", "Endocrine"],
-  ["消化", "Digestive"],
-  ["泌尿", "Urinary"],
-  ["男性生殖", "Male reproductive"],
-  ["女性生殖", "Female reproductive"],
-];
 export default function Home() {
   const en = usePreferences((s) => s.language) === "en";
   return (
@@ -25,6 +18,7 @@ export default function Home() {
             : "从结构与功能出发，连接临床思维；让每一项内容的证据边界清晰可见。"}
         </p>
       </div>
+      <BodyAtlas />
       <section className="focus-study" aria-labelledby="focus-title">
         <div>
           <p className="eyebrow">GOLDEN SAMPLE / 01</p>
@@ -85,24 +79,6 @@ export default function Home() {
               : "预览病例推理框架。当前尚无已审核的 CCS 病例。"}
           </p>
         </Link>
-      </section>
-      <section
-        className="system-index"
-        aria-label={en ? "System availability" : "系统开发状态"}
-      >
-        <h2>{en ? "Human systems" : "人体系统"}</h2>
-        <div>
-          <Link to="/anatomy">
-            <strong>{en ? "Cardiovascular" : "循环系统"}</strong>
-            <small>{en ? "Current focus" : "当前开发重点"}</small>
-          </Link>
-          {systems.map(([zh, english]) => (
-            <div key={english}>
-              <strong>{en ? english : zh}</strong>
-              <small>{en ? "In Development" : "建设中"}</small>
-            </div>
-          ))}
-        </div>
       </section>
       <details className="existing-course">
         <summary>

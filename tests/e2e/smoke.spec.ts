@@ -92,6 +92,13 @@ test("home, navigation, all routes and disclaimer", async ({
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "循环系统学习工作台",
   );
+  await expect(
+    page.getByRole("heading", { name: "人体系统总览" }),
+  ).toBeVisible();
+  await expect(page.getByRole("img", { name: /抽象全身轮廓/ })).toBeVisible();
+  await expect(
+    page.getByText("全身 3D 解剖模型尚未接入；待资产许可与医学审核后再开放。"),
+  ).toBeVisible();
   await expect(page.locator("footer")).toContainText(
     "实际诊断、治疗、处方和用药决策",
   );

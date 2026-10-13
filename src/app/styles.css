@@ -1051,6 +1051,135 @@ footer svg {
 .existing-course > summary {
   font-size: 0.88rem;
 }
+.body-atlas {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(24px, 5vw, 76px);
+  align-items: center;
+  margin: 20px 0 34px;
+  padding: clamp(22px, 3vw, 42px);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.body-atlas-figure h2 {
+  font-size: 1.5rem;
+}
+.body-silhouette {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 330px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f7f9fb, #edf2f6);
+  border: 1px solid var(--border);
+}
+.body-silhouette svg {
+  display: block;
+  height: min(350px, 43vh);
+  width: auto;
+  max-width: 90%;
+  margin: 10px;
+}
+.body-head,
+.body-form {
+  fill: #d6e2ec;
+  stroke: #6685a0;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+.body-detail,
+.body-axis {
+  fill: none;
+  stroke: #91a7ba;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.body-axis {
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-dasharray: 5 10;
+}
+.body-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.body-caption {
+  font-size: 0.77rem;
+  line-height: 1.6;
+  margin: 10px 0 0;
+}
+.body-atlas-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.body-atlas-heading h3 {
+  margin-bottom: 14px;
+  font-size: 1.15rem;
+}
+.body-atlas-heading .eyebrow {
+  margin-bottom: 5px;
+}
+.system-count,
+.system-index-number {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+.body-system-current,
+.body-system-future {
+  min-height: 59px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid var(--border);
+  padding: 9px 10px;
+}
+.body-system-current {
+  color: var(--teal);
+  margin: 5px -10px 0;
+}
+.body-system-current:hover {
+  background: #f2f6fa;
+}
+.body-system-current > svg {
+  margin-left: auto;
+}
+.body-system-copy strong,
+.body-system-copy small {
+  display: block;
+}
+.body-system-copy strong {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 550;
+}
+.body-system-copy small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.73rem;
+}
+.body-system-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 20px;
+}
+.body-system-future {
+  min-width: 0;
+  gap: 12px;
+}
+.body-model-status {
+  margin: 17px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
 .search-trigger {
   display: flex;
   align-items: center;
@@ -1192,6 +1321,10 @@ kbd {
     gap: 25px;
     padding: 24px;
   }
+  .body-atlas {
+    gap: 24px;
+    padding: 22px;
+  }
 }
 @media (max-width: 960px) {
   .app-header {
@@ -1252,6 +1385,25 @@ kbd {
   .focus-study {
     display: block;
     padding: 20px;
+  }
+  .body-atlas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    margin-block: 12px 24px;
+    padding: 18px;
+  }
+  .body-silhouette {
+    min-height: 280px;
+  }
+  .body-silhouette svg {
+    height: 260px;
+  }
+  .body-system-list {
+    column-gap: 8px;
+  }
+  .body-system-future {
+    gap: 8px;
+    padding-inline: 4px;
   }
   .focus-study h2 {
     font-size: 1.4rem;
