@@ -1,0 +1,5 @@
+{
+  "$schema": "./schemas/asset-registry.schema.json",
+  "schemaVersion": 1,
+  "assets": []
+}

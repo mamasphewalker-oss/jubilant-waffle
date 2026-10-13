@@ -58,6 +58,10 @@ Modern medicine anchors teaching. Traditional theory is a supplementary layer, s
 
 六个中医药开源候选已加入来源登记，在治疗教学页可查看。当前仅包含元数据、离线接入接口与证据分类校验，没有导入第三方医学数据或运行上游应用。参见 [来源核查](docs/tcm-open-source-research.md) 和 [接入计划](docs/tcm-integration-roadmap.md)。
 
+## External Resources & Medical Data Governance
+
+互联网可访问资源不等于医学证据或再利用许可。外部软件、临床来源和媒体资产分别登记；医学规则必须来自经过核验的结构化来源，并保留来源、版本、适用人群和审查状态。运行时 AI 不得临时修改诊断、治疗、药物剂量或方剂规则。未知许可或医学核验状态保持待核，不能进入生产内容。本项目用于医学教育，不用于患者诊疗或处方决策。完整入口见 [外部资源登记](sources/EXTERNAL_RESOURCES.md)、[资产政策](docs/ASSET_POLICY.md) 和 [医学来源登记](sources/SOURCE_REGISTRY.json)。
+
 ## License
 
 License: To be determined. No project license is granted by dependency licenses. Third-party licenses and attribution remain applicable independently.

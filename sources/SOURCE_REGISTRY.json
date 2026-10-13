@@ -1,0 +1,28 @@
+{
+  "$schema": "./schemas/source-registry.schema.json",
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "sourceId": "zh-authoritative-guideline-publishers",
+      "type": "guideline",
+      "title": "Chinese authoritative guideline source discovery; no individual guideline asserted",
+      "organization": "National Health Commission of the People's Republic of China; Chinese Medical Association and specialty branches; formal journals and national standards bodies (individual issuer must be recorded per guideline)",
+      "officialUrl": "https://www.nhc.gov.cn/",
+      "publication": null,
+      "doi": null,
+      "year": null,
+      "version": null,
+      "population": null,
+      "scope": null,
+      "recommendationSystem": null,
+      "licenseStatus": "pending_license_review",
+      "reviewedAt": null,
+      "status": "pendingVerification",
+      "supersedes": null,
+      "supersededBy": null,
+      "verificationStatus": "pendingVerification",
+      "usage": "MEDICAL_VERIFY_REQUIRED",
+      "notes": "Discovery record only, not a clinical recommendation. Before a guideline entity is created, record exact title, issuing organization, year/version, publication, DOI, official URL, population, scope, recommendation system, review date and supersession. No model-memory completion."
+    }
+  ]
+}

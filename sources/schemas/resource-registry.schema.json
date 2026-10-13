@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "External resource discovery registry",
+  "description": "Discovery metadata only; does not authorize importing code, data, assets or medical claims.",
+  "type": "object",
+  "required": ["schemaVersion", "registryPurpose", "resources"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "registryPurpose": { "type": "string", "minLength": 1 },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "category", "official_url", "repository_url", "source_type", "purpose", "priority", "usage", "ai_permissions", "license", "download_strategy", "medical_role", "notes", "last_verified"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "name": { "type": "string", "minLength": 1 },
+          "category": { "type": "string", "minLength": 1 },
+          "official_url": { "type": "string", "format": "uri" },
+          "repository_url": { "type": ["string", "null"], "format": "uri" },
+          "source_type": { "type": "string", "minLength": 1 },
+          "purpose": { "type": "string", "minLength": 1 },
+          "priority": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "usage": { "enum": ["AUTO_USE", "VERIFY_THEN_USE", "REFERENCE_ONLY", "MEDICAL_VERIFY_REQUIRED"] },
+          "ai_permissions": {
+            "type": "object",
+            "required": ["inspect", "download", "copy_code", "import_assets", "modify", "redistribute"],
+            "properties": { "inspect": { "type": "boolean" }, "download": { "type": "boolean" }, "copy_code": { "type": "boolean" }, "import_assets": { "type": "boolean" }, "modify": { "type": "boolean" }, "redistribute": { "type": "boolean" } },
+            "additionalProperties": false
+          },
+          "license": {
+            "type": "object",
+            "required": ["name", "status", "attribution_required", "share_alike", "noncommercial", "verify_per_asset"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "status": { "enum": ["verified", "pending_verification", "pending_license_review", "unknown", "restricted", "rejected"] },
+              "attribution_required": { "type": ["boolean", "string"] },
+              "share_alike": { "type": ["boolean", "string"] },
+              "noncommercial": { "type": ["boolean", "string"] },
+              "verify_per_asset": { "type": "boolean" },
+              "license_url": { "type": ["string", "null"], "format": "uri" }
+            },
+            "additionalProperties": false
+          },
+          "download_strategy": { "type": "string", "minLength": 1 },
+          "medical_role": { "type": "string", "minLength": 1 },
+          "notes": { "type": "string" },
+          "last_verified": { "type": "string", "format": "date" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

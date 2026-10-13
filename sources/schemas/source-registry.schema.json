@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/jubilant-waffle/source-registry.schema.json",
+  "title": "Medical knowledge sources",
+  "type": "object",
+  "required": ["schemaVersion", "sources"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sourceId", "type", "title", "organization", "officialUrl", "publication", "doi", "year", "version", "population", "scope", "recommendationSystem", "licenseStatus", "reviewedAt", "status", "supersedes", "supersededBy", "verificationStatus", "usage"],
+        "properties": {
+          "sourceId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "type": { "enum": ["guideline", "textbook", "drug_label", "pharmacopoeia", "consensus", "clinical_manual", "paper", "terminology_source", "case_source"] },
+          "title": { "type": "string", "minLength": 1 },
+          "organization": { "type": "string", "minLength": 1 },
+          "officialUrl": { "type": "string", "format": "uri" },
+          "publication": { "type": ["string", "null"] },
+          "doi": { "type": ["string", "null"] },
+          "year": { "type": ["integer", "null"], "minimum": 1000 },
+          "version": { "type": ["string", "null"] },
+          "population": { "type": ["string", "null"] },
+          "scope": { "type": ["string", "null"] },
+          "recommendationSystem": { "type": ["string", "null"] },
+          "licenseStatus": { "enum": ["verified", "pending_license_review", "restricted", "unknown"] },
+          "reviewedAt": { "type": ["string", "null"], "format": "date" },
+          "status": { "enum": ["verified", "pendingVerification", "superseded", "archived"] },
+          "supersedes": { "type": ["string", "null"] },
+          "supersededBy": { "type": ["string", "null"] },
+          "verificationStatus": { "enum": ["verified", "pendingVerification", "needs-review"] },
+          "usage": { "enum": ["AUTO_USE", "VERIFY_THEN_USE", "REFERENCE_ONLY", "MEDICAL_VERIFY_REQUIRED"] },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
